@@ -15,7 +15,19 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class LoginController {
 
+    private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public Response login(@RequestBody Login login){
+        Response response = new Response();
+        User user = userRepository.findUserByEmail(login.getEmail());
+        if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
+            response.setStatus("true");
+        }else{
+            response.setStatus("false");
+        }
+        return response;
+
     }
 }

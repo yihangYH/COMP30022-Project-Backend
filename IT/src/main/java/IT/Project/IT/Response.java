@@ -4,7 +4,6 @@ public class Response {
 
     private String status;
 
-
     public String getStatus() {
         return status;
     }

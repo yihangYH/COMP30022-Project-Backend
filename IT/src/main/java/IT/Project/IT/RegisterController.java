@@ -18,24 +18,6 @@ public class RegisterController {
     private UserService userService;
     @PostMapping("/register")
     public Response register(@RequestBody Register register){
-//        this.passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = this.passwordEncoder.encode(register.getPassword());
-//        boolean test = this.passwordEncoder.matches(register.getPassword(), encodedPassword);
-//
-//        User user = new User();
-//        user.setEmail(register.getEmail());
-//        user.setPassword(encodedPassword);
-//        user.setFavouriteRestaurant(register.getFavouriteRestaurant());
-//        user.setUsername(register.getUsername());
-//        byte[] bytes = register.getImage().getBytes();
-//        user.setTestFile(bytes);
-//        System.out.println(encodedPassword);
-//        System.out.println(test);
-//        String s = new String(bytes);
-//        System.out.println(s);
-//        Response response = new Response();
-//        response = userService.createUser(user);
-//        System.out.println(user.getId());
-//        return response;
+        
     }
 }

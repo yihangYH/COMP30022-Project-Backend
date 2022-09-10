@@ -24,6 +24,7 @@ public class LoginController {
         User user = userRepository.findUserByEmail(login.getEmail());
         if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
             response.setStatus("true");
+            response.setId(user.getId());
         }else{
             response.setStatus("false");
         }

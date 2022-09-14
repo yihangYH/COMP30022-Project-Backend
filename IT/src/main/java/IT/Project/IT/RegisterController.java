@@ -18,6 +18,8 @@ public class RegisterController {
     private UserService userService;
     @PostMapping("/register")
     public Response register(@RequestBody Register register){
-        
+        // encode password
+        this.passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = this.passwordEncoder.encode(register.getPassword());
     }
 }

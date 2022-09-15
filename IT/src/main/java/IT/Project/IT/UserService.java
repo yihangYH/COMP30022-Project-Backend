@@ -10,9 +10,8 @@ public class UserService {
 
     public Response createUser(User user){
         userRepository.insert(user);
-
         Response response = new Response();
         response.setStatus("true");
-        return  response;
+        return response;
     }
 }

@@ -8,6 +8,5 @@ public interface ImageRepository extends MongoRepository<Image, String> {
     @Query
     Image findImageById(ObjectId _id);
 
-//    Image findById()
 
 }

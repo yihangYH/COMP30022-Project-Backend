@@ -20,13 +20,19 @@ public class LoginController {
     @PostMapping("/login")
     public Response login(@RequestBody Login login){
         Response response = new Response();
-        User user = userRepository.findUserByEmail(login.getEmail());
-        if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
-            response.setStatus("true");
-            response.setId(user.getId());
-        }else{
+        try{
+            User user = userRepository.findUserByEmail(login.getEmail());
+            if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
+                response.setStatus("true");
+                response.setId(user.getId());
+            }else{
+                response.setStatus("false");
+            }
+        }catch(Exception ex){
             response.setStatus("false");
         }
+
+
         return response;
 
     }

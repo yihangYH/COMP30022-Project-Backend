@@ -75,6 +75,36 @@ public class PostController {
         return response;
     }
 
+    @PostMapping("/updatePost/{postId}/{userId}")
+    public Response updatePost(@PathVariable String postId, @PathVariable String userId, @RequestBody Post post){
+        User user = userRepository.findById(userId).get();
+        Post oldPost = postRepository.findById(postId).get();
+        List<String> foodPostIds = oldPost.getFoodPostsId();
+        for(String id : foodPostIds){
+            FoodPost foodPost = foodPostRepository.findById(id).get();
+            imageRepository.deleteById(foodPost.getId());
+            foodPostRepository.deleteById(foodPost.getId());
+        }
+        byte[] imageBytes = post.getImage().getBytes();
+        Image image = new Image();
+        image.setImage(imageBytes);
+        imageRepository.insert(image);
+        post.setImage(image.getId());
+        postRepository.insert(post);
+        List<String> newPostIds = user.getPostId();
+        newPostIds.add(post.getId());
+        user.setPostId(newPostIds);
+        if(newPostIds.remove(postId)){
+            userRepository.save(user);
+        }
+        postRepository.deleteById(postId);
+        Response response = new Response();
+        response.setStatus("true");
+
+        return response;
+
+    }
+
 
 
 }

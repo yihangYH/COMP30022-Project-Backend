@@ -3,6 +3,8 @@ package IT.Project.IT;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +92,13 @@ public class PostController {
         image.setImage(imageBytes);
         imageRepository.insert(image);
         post.setImage(image.getId());
+        post.setFoodPostsId(post.getFoodPostsId());
+        // get post created date
+        LocalDate dateObj = LocalDate.now();
+        // format date to YYYY-MM-DD
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateObj.format(formatter);
+        post.setDate(date);
         postRepository.insert(post);
         List<String> newPostIds = user.getPostId();
         newPostIds.add(post.getId());

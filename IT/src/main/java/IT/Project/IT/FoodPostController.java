@@ -38,7 +38,6 @@ public class FoodPostController {
         Response response = new Response();
         response.setId(foodPost.getId());
         response.setStatus("true");
-        response.setId(foodPost.getId());
         return response;
     }
 

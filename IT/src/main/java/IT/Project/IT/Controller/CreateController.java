@@ -1,12 +1,15 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
+import IT.Project.IT.Models.*;
+import IT.Project.IT.Repository.UserRepository;
+import IT.Project.IT.Service.ImageService;
+import IT.Project.IT.Service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController

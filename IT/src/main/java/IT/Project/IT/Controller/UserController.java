@@ -1,5 +1,10 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
+import IT.Project.IT.Models.Post;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.ImageRepository;
+import IT.Project.IT.Repository.PostRepository;
+import IT.Project.IT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +22,7 @@ public class UserController {
 
     private ImageRepository imageRepository;
 
-    @GetMapping("/getuser/{userId}")
+    @GetMapping("/getUser/{userId}")
     public User getUser(@PathVariable String userId){
         User user = userRepository.findById(userId).get();
         byte[] profileImage = imageRepository.findById(user.getProfileImageID()).get().getImage();

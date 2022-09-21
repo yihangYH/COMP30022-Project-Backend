@@ -1,5 +1,14 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
+import IT.Project.IT.Models.FoodPost;
+import IT.Project.IT.Models.Image;
+import IT.Project.IT.Models.Post;
+import IT.Project.IT.Repository.PostRepository;
+import IT.Project.IT.Repository.FoodPostRepository;
+import IT.Project.IT.Repository.ImageRepository;
+import IT.Project.IT.Models.Response;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +29,7 @@ public class PostController {
 
     private UserRepository userRepository;
 
-    @GetMapping("/getpost/{postId}")
+    @GetMapping("/getPost/{postId}")
     public Post getPost(@PathVariable String postId){
         Post post = postRepository.findById(postId).get();
         String imageId = post.getImage();
@@ -39,7 +48,7 @@ public class PostController {
         return post;
     }
 
-    @DeleteMapping("/deletepost/{userId}/{postId}")
+    @DeleteMapping("/deletePost/{userId}/{postId}")
     public Response deletePost(@PathVariable String userId, @PathVariable String postId){
         // get post based on the postId
         Post post = postRepository.findById(postId).get();

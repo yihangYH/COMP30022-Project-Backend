@@ -1,5 +1,8 @@
-package IT.Project.IT;
+package IT.Project.IT.Service;
 
+import IT.Project.IT.Models.Response;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,13 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
 
+import IT.Project.IT.Models.FoodPost;
+import IT.Project.IT.Models.Image;
+import IT.Project.IT.Models.Post;
+import IT.Project.IT.Models.Response;
+import IT.Project.IT.Repository.FoodPostRepository;
+import IT.Project.IT.Repository.ImageRepository;
+import IT.Project.IT.Repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

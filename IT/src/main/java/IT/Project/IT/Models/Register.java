@@ -1,4 +1,4 @@
-package IT.Project.IT;
+package IT.Project.IT.Models;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

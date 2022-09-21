@@ -1,5 +1,6 @@
-package IT.Project.IT;
+package IT.Project.IT.Models;
 
+import IT.Project.IT.Models.FoodPost;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

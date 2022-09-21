@@ -1,5 +1,7 @@
-package IT.Project.IT;
+package IT.Project.IT.Service;
 
+import IT.Project.IT.Models.Image;
+import IT.Project.IT.Repository.ImageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

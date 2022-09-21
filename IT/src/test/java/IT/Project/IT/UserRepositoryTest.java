@@ -1,13 +1,13 @@
 package IT.Project.IT;
 
 
-import org.junit.BeforeClass;
+import IT.Project.IT.Controller.RegisterController;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.UserRepository;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 

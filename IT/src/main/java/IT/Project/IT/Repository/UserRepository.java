@@ -1,8 +1,7 @@
-package IT.Project.IT;
+package IT.Project.IT.Repository;
 
+import IT.Project.IT.Models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
 

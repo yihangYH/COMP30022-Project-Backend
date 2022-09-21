@@ -42,10 +42,12 @@ public class CreateController {
         // create an empty FoodPost array, used to store FoodPost when get request is called
         List<FoodPost> foodPosts = new ArrayList<>();
         List<String> foodPostIds = new ArrayList<>();
-        for(int i = 0; i < post.getFoodPostsId().size(); i++ ){
-            foodPostIds.add(post.getFoodPostsId().get(i));
+        if(post.getFoodPostsId() != null){
+            for(int i = 0; i < post.getFoodPostsId().size(); i++ ){
+                foodPostIds.add(post.getFoodPostsId().get(i));
+            }
         }
-        post.setFoodPostsId(post.getFoodPostsId());
+        post.setFoodPostsId(foodPostIds);
         post.setFoodPosts(foodPosts);
 
         // create a post and save to DB collection

@@ -1,11 +1,10 @@
 package IT.Project.IT;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +17,8 @@ public class PostController {
 
     private FoodPostRepository foodPostRepository;
     private ImageRepository imageRepository;
+
+    private UserRepository userRepository;
 
     @GetMapping("/getpost/{postId}")
     public Post getPost(@PathVariable String postId){
@@ -36,6 +37,81 @@ public class PostController {
         }
         post.setFoodPosts(foodPosts);
         return post;
+    }
+
+    @DeleteMapping("/deletepost/{userId}/{postId}")
+    public Response deletePost(@PathVariable String userId, @PathVariable String postId){
+        // get post based on the postId
+        Post post = postRepository.findById(postId).get();
+        // get user based on the userId
+        User user = userRepository.findById(userId).get();
+        // get all the postId from user
+        List<String> posts = user.getPostId();
+        // remove postId from user PostId array
+        if(posts.remove(postId)){
+            user.setPostId(posts);
+            // update user collection  with the latest data
+            userRepository.save(user);
+        }
+
+        // init a list to store the foodPostId which related to the post user want to delete
+        List<String> foodPostId = new ArrayList<>();
+
+        // get all the food id from post
+        for(String id : post.getFoodPostsId()){
+            foodPostId.add(id);
+        }
+        // delete all the food and food image
+        for(String id : foodPostId){
+            FoodPost foodPost = foodPostRepository.findById(id).get();
+            imageRepository.deleteById(foodPost.getFoodImage());
+            foodPostRepository.deleteById(id);
+        }
+        // delete post image;
+        imageRepository.deleteById(post.getImage());
+        // delete the post
+        postRepository.deleteById(postId);
+
+        Response response = new Response();
+        response.setStatus("true");
+        return response;
+    }
+
+    @PostMapping("/updatePost/{postId}/{userId}")
+    public Response updatePost(@PathVariable String postId, @PathVariable String userId, @RequestBody Post post){
+        User user = userRepository.findById(userId).get();
+        Post oldPost = postRepository.findById(postId).get();
+        List<String> foodPostIds = oldPost.getFoodPostsId();
+        for(String id : foodPostIds){
+            FoodPost foodPost = foodPostRepository.findById(id).get();
+            imageRepository.deleteById(foodPost.getId());
+            foodPostRepository.deleteById(foodPost.getId());
+        }
+        byte[] imageBytes = post.getImage().getBytes();
+        Image image = new Image();
+        image.setImage(imageBytes);
+        imageRepository.insert(image);
+        post.setImage(image.getId());
+        post.setFoodPostsId(post.getFoodPostsId());
+        // get post created date
+        LocalDate dateObj = LocalDate.now();
+        // format date to YYYY-MM-DD
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = dateObj.format(formatter);
+        post.setDate(date);
+        postRepository.insert(post);
+        List<String> newPostIds = user.getPostId();
+        newPostIds.add(post.getId());
+        user.setPostId(newPostIds);
+        if(newPostIds.remove(postId)){
+            userRepository.save(user);
+        }
+        postRepository.deleteById(postId);
+        Response response = new Response();
+        response.setStatus("true");
+
+        return response;
+
     }
 
 

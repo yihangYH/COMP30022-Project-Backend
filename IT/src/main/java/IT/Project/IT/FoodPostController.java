@@ -2,10 +2,9 @@ package IT.Project.IT;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -15,6 +14,8 @@ public class FoodPostController {
     private FoodPostRepository foodPostRepository;
 
     private ImageRepository imageRepository;
+
+    private PostRepository postRepository;
 
     @PostMapping("/creatFoodPost")
     public Response createFoodPost(@RequestBody FoodPost foodPost){
@@ -37,7 +38,25 @@ public class FoodPostController {
         Response response = new Response();
         response.setId(foodPost.getId());
         response.setStatus("true");
-        response.setId(foodPost.getId());
+        return response;
+    }
+
+    @DeleteMapping("/deleteFoodPost/{foodPostId}/{postId}")
+    public Response deleteFoodPost(@PathVariable String foodPostId, @PathVariable String postId){
+        FoodPost foodPost = foodPostRepository.findById(foodPostId).get();
+        Post post = postRepository.findById(postId).get();
+        List<String> foodPostIds = post.getFoodPostsId();
+        if(foodPostIds.remove(foodPostId)){
+            post.setFoodPostsId(foodPostIds);
+            postRepository.save(post);
+        }
+        String imageId = foodPost.getFoodImage();
+        imageRepository.deleteById(imageId);
+        foodPostRepository.deleteById(foodPostId);
+
+        Response response = new Response();
+        response.setStatus("true");
+
         return response;
     }
 }

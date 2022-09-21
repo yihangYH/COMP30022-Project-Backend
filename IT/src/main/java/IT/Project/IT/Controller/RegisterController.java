@@ -1,5 +1,13 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
+import IT.Project.IT.Models.Image;
+import IT.Project.IT.Models.Post;
+import IT.Project.IT.Models.Register;
+import IT.Project.IT.Models.Response;
+import IT.Project.IT.Service.ImageService;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.UserRepository;
+import IT.Project.IT.Service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

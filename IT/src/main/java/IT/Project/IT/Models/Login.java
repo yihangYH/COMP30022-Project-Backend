@@ -1,4 +1,4 @@
-package IT.Project.IT;
+package IT.Project.IT.Models;
 
 public class Login {
 

@@ -1,6 +1,10 @@
-package IT.Project.IT;
+package IT.Project.IT.Controller;
 
 
+import IT.Project.IT.Models.Login;
+import IT.Project.IT.Models.Response;
+import IT.Project.IT.Models.User;
+import IT.Project.IT.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -21,12 +24,19 @@ public class LoginController {
     @PostMapping("/login")
     public Response login(@RequestBody Login login){
         Response response = new Response();
-        User user = userRepository.findUserByEmail(login.getEmail());
-        if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
-            response.setStatus("true");
-        }else{
+        try{
+            User user = userRepository.findUserByEmail(login.getEmail());
+            if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
+                response.setStatus("true");
+                response.setId(user.getId());
+            }else{
+                response.setStatus("false");
+            }
+        }catch(Exception ex){
             response.setStatus("false");
         }
+
+
         return response;
 
     }

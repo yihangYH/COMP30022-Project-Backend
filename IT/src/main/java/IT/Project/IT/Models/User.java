@@ -1,10 +1,10 @@
-package IT.Project.IT;
+package IT.Project.IT.Models;
 
+import IT.Project.IT.Models.Post;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.List;
 
@@ -26,12 +26,21 @@ public class User {
 
     private String profileImageID;
 
-    public User(String email, String password, String username, String favouriteRestaurant, String profileImageID) {
+    private List<String> postId;
+
+    private  List<Post> posts;
+
+    public User(String email, String password, String username,
+                String favouriteRestaurant,
+                String profileImageID, List<String> postId,
+                List<Post> posts) {
         this.email = email;
         this.password = password;
         this.username = username;
         this.favouriteRestaurant = favouriteRestaurant;
         this.profileImageID = profileImageID;
+        this.postId = postId;
+        this.posts = posts;
     }
 
     public String getProfileImageID() {
@@ -83,5 +92,21 @@ public class User {
 
     public void setFavouriteRestaurant(String favouriteRestaurant) {
         this.favouriteRestaurant = favouriteRestaurant;
+    }
+
+    public List<String> getPostId() {
+        return postId;
+    }
+
+    public void setPostId(List<String> postId) {
+        this.postId = postId;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }

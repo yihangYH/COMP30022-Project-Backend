@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
         run: mvn spring-boot:run -Dspring-boot.run.arguments="--spring.data.mongodb.uri =${{secrets.MONGODB_URI}}"
       - name: Deploy to heroku using an action
         uses: AkhileshNS/heroku-deploy@v3.12.12

@@ -7,6 +7,13 @@ on:
   workflow_dispatch:
 
 jobs:
+  Linux-job:
+    name: Inject application.properties
+    runs-on: ubuntu-latest
+
+    Steps:
+      -uses: actions/checkout@v2
+        run: mvn spring-boot:run -Dspring-boot.run.arguments="--spring.data.mongodb.uri =${{secrets.MONGODB_URI}}"
   build:
     runs-on: ubuntu-latest
     steps:

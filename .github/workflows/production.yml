@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-        echo "testing"
+      - run: echo "testing"
       - name: Deploy to heroku using an action
         uses: AkhileshNS/heroku-deploy@v3.12.12
         with:

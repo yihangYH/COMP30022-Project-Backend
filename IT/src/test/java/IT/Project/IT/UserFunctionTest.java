@@ -48,7 +48,7 @@ class UserFunctionTest {
                 "631d91784100e55744e910a1", new ArrayList<>(), new ArrayList<>());
 
         userRepositoryTest.insert(user);
-        assertThat(userRepositoryTest.findUserByEmail("abcd1234")).isNotNull();
+        assertThat(userRepositoryTest.findUserByEmail("mock@demo.com")).isNotNull();
 
     }
 

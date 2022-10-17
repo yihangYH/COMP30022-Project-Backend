@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+// avoid cross origin issue
 @CrossOrigin(origins = {"http://localhost:3000", "https://restaurant-at-unimelb-api.herokuapp.com", "https://restaurant-at-unimelb.herokuapp.com"})
 public class FoodPostController {
 
@@ -50,17 +51,25 @@ public class FoodPostController {
 
     @DeleteMapping("/deleteFoodPost/{foodPostId}/{postId}")
     public Response deleteFoodPost(@PathVariable String foodPostId, @PathVariable String postId){
+        // find the foodPost via foodPostId
         FoodPost foodPost = foodPostRepository.findById(foodPostId).get();
+        // find post via postId
         Post post = postRepository.findById(postId).get();
+        // find all the foodPostIds which is under this foodPost
         List<String> foodPostIds = post.getFoodPostsId();
+        // delete the foodPostId from foodPostIds, and save it again
         if(foodPostIds.remove(foodPostId)){
             post.setFoodPostsId(foodPostIds);
             postRepository.save(post);
         }
+        // get imageId for this foodPost
         String imageId = foodPost.getFoodImage();
+        // delete this image from MongoDB
         imageRepository.deleteById(imageId);
+        // delete this foodPost
         foodPostRepository.deleteById(foodPostId);
 
+        // create a api response
         Response response = new Response();
         response.setStatus("true");
 

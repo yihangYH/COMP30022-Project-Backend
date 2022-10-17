@@ -13,9 +13,5 @@ public class ImageService {
 
     public void insertImage(Image image){
         imageRespository.insert(image);
-
-//        Response response = new Response();
-//        response.setStatus("true");
-//        return  response;
     }
 }

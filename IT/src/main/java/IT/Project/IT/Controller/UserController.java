@@ -24,10 +24,14 @@ public class UserController {
 
     @GetMapping("/getUser/{userId}")
     public User getUser(@PathVariable String userId){
+        // get user via Id
         User user = userRepository.findById(userId).get();
+        // get user profile image
         byte[] profileImage = imageRepository.findById(user.getProfileImageID()).get().getImage();
         user.setProfileImageID(new String(profileImage));
+        // get all the post which posted by this user
         List<Post> posts = new ArrayList<>();
+        // get detailed post info
         if(user.getPostId().size() != 0){
             for(int i = 0; i < user.getPostId().size(); i++){
                 Post post = postRepository.findById(user.getPostId().get(i)).get();
@@ -37,6 +41,7 @@ public class UserController {
                 posts.add(post);
 
             }
+            // overwrite posts field
             user.setPosts(posts);
         }
         return user;

@@ -85,21 +85,21 @@ public class PostFunctionTest {
         assertThat(postRepositoryTest.findById(post.getId())).isNotNull();
     }
 
-    @Test
-    void itShouldFindPostById() {
-        User resultUser = userRepositoryTest.findUserByEmail("asd@demo.com");
-        assertThat(resultUser.getEmail()).isEqualTo("asd@demo.com");
-        assertThat(resultUser.getUsername()).isEqualTo("test");
-        assertThat(resultUser.getProfileImageID()).isEqualTo("631d91784100e55744e910a1");
-        String postId = resultUser.getPostId().get(0);
-        Post post = postRepositoryTest.findById(postId).get();
-        assertThat(post).isNotNull();
-        assertThat(post.getDate()).isNotNull();
-        assertThat(post.getImage()).isEqualTo("631d91784100e55744e910a1");
-        assertThat(post.getComment()).isEqualTo("mock comment");
-        assertThat(post.getName()).isEqualTo("mock data");
-        assertThat(post.getLocation()).isEqualTo("mock location");
-        assertThat(post.getTitle()).isEqualTo("mock title");
-        assertThat(post.getRate()).isEqualTo(5.0);
-    }
+//    @Test
+//    void itShouldFindPostById() {
+//        User resultUser = userRepositoryTest.findUserByEmail("asd@demo.com");
+//        assertThat(resultUser.getEmail()).isEqualTo("asd@demo.com");
+//        assertThat(resultUser.getUsername()).isEqualTo("test");
+//        assertThat(resultUser.getProfileImageID()).isEqualTo("631d91784100e55744e910a1");
+//        String postId = resultUser.getPostId().get(0);
+//        Post post = postRepositoryTest.findById(postId).get();
+//        assertThat(post).isNotNull();
+//        assertThat(post.getDate()).isNotNull();
+//        assertThat(post.getImage()).isEqualTo("631d91784100e55744e910a1");
+//        assertThat(post.getComment()).isEqualTo("mock comment");
+//        assertThat(post.getName()).isEqualTo("mock data");
+//        assertThat(post.getLocation()).isEqualTo("mock location");
+//        assertThat(post.getTitle()).isEqualTo("mock title");
+//        assertThat(post.getRate()).isEqualTo(5.0);
+//    }
 }

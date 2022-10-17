@@ -23,16 +23,24 @@ public class LoginController {
 
     @PostMapping("/login")
     public Response login(@RequestBody Login login){
+        // init response obj
         Response response = new Response();
+        // try to get user info from Mongodb
         try{
+            // find user by user Email
             User user = userRepository.findUserByEmail(login.getEmail());
+            // check if user exists and if the password is matching
             if(user != null && passwordEncoder.matches(login.getPassword(),user.getPassword())){
+                // if user exists and password is matching, set response true and
+                // id = userId
                 response.setStatus("true");
                 response.setId(user.getId());
             }else{
+                // else set response to false
                 response.setStatus("false");
             }
         }catch(Exception ex){
+            // if any exception occur, set response to false
             response.setStatus("false");
         }
 

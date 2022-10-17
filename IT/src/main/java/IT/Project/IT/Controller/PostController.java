@@ -31,20 +31,32 @@ public class PostController {
 
     @GetMapping("/getPost/{postId}")
     public Post getPost(@PathVariable String postId){
+        // find the post via postId
         Post post = postRepository.findById(postId).get();
+        // get post image Id
         String imageId = post.getImage();
+        // use imageId to find the image string and convert it to byte array
         byte[] imageBytes = imageRepository.findById(imageId).get().getImage();
+        // overwrite the post image filed with byte array
         post.setImage(new String(imageBytes));
+        // init foodPosts array
         List<FoodPost> foodPosts = new ArrayList<>();
+        // based on the post FoodPostsId field to find all the food post
         if(post.getFoodPostsId() != null){
             for(int i =0 ;i < post.getFoodPostsId().size(); i++){
+                // find foodpost via id
                 FoodPost foodPost = foodPostRepository.findById(post.getFoodPostsId().get(i)).get();
+                // get foodPost image
                 byte[] foodImgBytes = imageRepository.findById(foodPost.getFoodImage()).get().getImage();
+                // overwrite foodpost image with byte array
                 foodPost.setFoodImage(new String(foodImgBytes));
+                // add this foodpost to the list
                 foodPosts.add(foodPost);
             }
         }
+        // overwrite post FoodPosts field.
         post.setFoodPosts(foodPosts);
+        // return the post obj
         return post;
     }
 
@@ -88,17 +100,25 @@ public class PostController {
 
     @PostMapping("/updatePost/{postId}/{userId}")
     public Response updatePost(@PathVariable String postId, @PathVariable String userId, @RequestBody Post post){
+        // find the user via userId
         User user = userRepository.findById(userId).get();
+        // find the old post via postId
         Post oldPost = postRepository.findById(postId).get();
+        // find old foodPostIds
         List<String> foodPostIds = oldPost.getFoodPostsId();
+        // based on the foodPostsIds find all the foodPost and delete it
         for(String id : foodPostIds){
             FoodPost foodPost = foodPostRepository.findById(id).get();
+            // delete foodPost image first
             imageRepository.deleteById(foodPost.getId());
+            // delete foodPost
             foodPostRepository.deleteById(foodPost.getId());
         }
+        // get post image byte
         byte[] imageBytes = post.getImage().getBytes();
         Image image = new Image();
         image.setImage(imageBytes);
+        // save new image to the MongoDB
         imageRepository.insert(image);
         post.setImage(image.getId());
         post.setFoodPostsId(post.getFoodPostsId());
@@ -108,17 +128,22 @@ public class PostController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = dateObj.format(formatter);
         post.setDate(date);
+        // save the new post
         postRepository.insert(post);
         List<String> newPostIds = user.getPostId();
         newPostIds.add(post.getId());
         user.setPostId(newPostIds);
+        // remove the old post from postIds and save the user
         if(newPostIds.remove(postId)){
             userRepository.save(user);
         }
+        // delete old post
         postRepository.deleteById(postId);
+        // create new response and set to true
         Response response = new Response();
         response.setStatus("true");
 
+        // return api response
         return response;
 
     }
